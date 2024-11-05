@@ -12,11 +12,11 @@ export GPGPUSIM_ROOT="$( cd "$( dirname "$BASH_SOURCE" )" && pwd )"
 GPGPUSIM_VERSION_STRING=`cat $GPGPUSIM_ROOT/version | awk '/Version/ {print $8}'`
 #Detect Git branch and commit #
 GIT_COMMIT=`git log -n 1 | head -1 | sed -re 's/commit (.*)/\1/'`
-GIT_FILES_CHANGED=`git diff --numstat | wc | sed -re 's/^\s+([0-9]+).*/\1./'`
-GIT_FILES_CHANGED+=`git diff --numstat --cached | wc | sed -re 's/^\s+([0-9]+).*/\1/'`
-GPGPUSIM_BUILD_STRING="gpgpu-sim_git-commit-$GIT_COMMIT-modified_$GIT_FILES_CHANGED"
+# GIT_FILES_CHANGED=`git diff --numstat | wc | sed -re 's/^\s+([0-9]+).*/\1./'`
+# GIT_FILES_CHANGED+=`git diff --numstat --cached | wc | sed -re 's/^\s+([0-9]+).*/\1/'`
+# GPGPUSIM_BUILD_STRING="gpgpu-sim_git-commit-$GIT_COMMIT-modified_$GIT_FILES_CHANGED"
 
-echo -n "GPGPU-Sim version $GPGPUSIM_VERSION_STRING (build $GPGPUSIM_BUILD_STRING) ";
+# echo -n "GPGPU-Sim version $GPGPUSIM_VERSION_STRING (build $GPGPUSIM_BUILD_STRING) ";
 
 if [ ! -n "$CUDA_INSTALL_PATH" ]; then
 	echo "ERROR ** Install CUDA Toolkit and set CUDA_INSTALL_PATH.";
@@ -140,6 +140,7 @@ fi
 echo "setup_environment succeeded";
 
 export GPGPUSIM_SETUP_ENVIRONMENT_WAS_RUN=1
-
 cd /root/uvmsmart/benchmarks/Managed/2DCONV/
-./run | tee runtime_dump.log
+echo "Entrypoint ended";
+
+/bin/bash "$@"
