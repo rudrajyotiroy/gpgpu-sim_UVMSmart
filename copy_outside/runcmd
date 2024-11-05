@@ -1,0 +1,4 @@
+Build : sudo docker build -t uvmsmart:latest .
+Run : sudo docker run uvmsmart:latest
+Run interactive : sudo docker run --name uvmsmart_1105 -it uvmsmart:latest
+Enter interactive : sudo docker exec uvmsmart_1105 -it uvmsmart:latest

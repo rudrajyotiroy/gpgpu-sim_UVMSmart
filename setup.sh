@@ -52,6 +52,7 @@ CC_VERSION=`gcc --version | head -1 | awk '{for(i=1;i<=NF;i++){ if(match($i,/^[0
 
 CUDA_VERSION_STRING=`$CUDA_INSTALL_PATH/bin/nvcc --version | awk '/release/ {print $5;}' | sed 's/,//'`;
 CUDA_VERSION_NUMBER=`echo $CUDA_VERSION_STRING | sed 's/\./ /' | awk '{printf("%02u%02u", 10*int($1), 10*$2);}'`
+
 if [ $CUDA_VERSION_NUMBER -gt 9100 -o $CUDA_VERSION_NUMBER -lt 2030  ]; then
 	echo "ERROR ** GPGPU-Sim version $GPGPUSIM_VERSION_STRING not tested with CUDA version $CUDA_VERSION_STRING (please see README)";
 	return
@@ -139,3 +140,6 @@ fi
 echo "setup_environment succeeded";
 
 export GPGPUSIM_SETUP_ENVIRONMENT_WAS_RUN=1
+
+cd /root/uvmsmart/benchmarks/Managed/2DCONV/
+./run | tee runtime_dump.log
