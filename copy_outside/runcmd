@@ -1,4 +1,5 @@
 Build : sudo docker build -t uvmsmart:latest .
 Run : sudo docker run uvmsmart:latest
-Run interactive : sudo docker run --name uvmsmart_1105 -it uvmsmart:latest
-Enter interactive : sudo docker exec uvmsmart_1105 -it uvmsmart:latest
+Run interactive : sudo docker run --name uvmsmart_date_version -it uvmsmart:latest
+Enter interactive : sudo docker exec uvmsmart_date_version -it uvmsmart:latest
+Copy back : sudo docker cp uvmsmart_1105_4:/root/uvmsmart/benchmarks/Managed/2DCONV/run_2DCONV.log - > ./gpgpu-sim_UVMSmart/benchmarks/Managed/2DCONV/run_2DCONV.log
