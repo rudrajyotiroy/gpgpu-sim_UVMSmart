@@ -474,7 +474,7 @@ unsigned cache_stats::operator()(int access_type, int access_outcome) const{
     /// Const accessor into m_stats.
     ///
     if(!check_valid(access_type, access_outcome))
-        assert(0 && "Unknown cache access type or access outcome");
+        assert(0 && "Unknown cache access type or access outcome...");
 
     return m_stats[access_type][access_outcome];
 }

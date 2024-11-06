@@ -10,5 +10,5 @@ RUN wget -O /tmp/cuda_8.0.61_375.26_linux-run https://developer.nvidia.com/compu
 RUN chmod +x /tmp/cuda_8.0.61_375.26_linux-run
 RUN /tmp/cuda_8.0.61_375.26_linux-run -silent -toolkit
 RUN git clone https://github.com/DebashisGanguly/gpgpu-sim_UVMSmart.git /root/gpgpu-sim_UVMSmart
-RUN /bin/bash -c "cd /root/gpgpu-sim_UVMSmart; source setup_environment; make -j20; cd benchmarks/; ./setup_config.sh GeForceGTX1080Ti; make; find . -name 'run' | xargs chmod +x"
+RUN /bin/bash -c "cd /root/uvmsmart && source setup_environment && make -j20 && cd benchmarks/ && ./setup_config.sh GeForceGTX1080Ti && make && find . -name 'run' | xargs chmod +x"
 
