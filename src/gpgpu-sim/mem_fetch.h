@@ -47,6 +47,11 @@ enum mf_type {
 #undef MF_TUP
 #undef MF_TUP_END
 
+/*
+Memory transaction or "fetch" in a GPU or high-performance computing system. It encapsulates all the information and operations required for handling a single memory request, such as a read or write, within the memory hierarchy.
+
+*/
+
 class mem_fetch {
 public:
     mem_fetch( const mem_access_t &access, 
