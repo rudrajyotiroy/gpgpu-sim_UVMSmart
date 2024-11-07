@@ -2524,6 +2524,7 @@ void gmmu_t::evict_whole_tree(struct lp_tree_node *node)
     }
 }
 
+// Update valid addresses for all memory blocks starting from root until leaf (where node->size is 64KB), by "size" amount inc/dec for prefetch/eviction
 mem_addr_t gmmu_t::update_basic_block(struct lp_tree_node *node, mem_addr_t addr, size_t size,  bool prefetch) 
 {
    while (node->size != MIN_PREFETCH_SIZE) {
@@ -3554,9 +3555,80 @@ void gmmu_t::cycle()
     }
 }
 
+/*
+FUNCTION do_hardware_prefetch(page_faults)
+    IF page_faults IS NOT EMPTY THEN
+        Initialize num_pages_read_stage_queue to 0
+
+        FOR each entry in pcie_read_stage_queue
+            Add entry's page list size to num_pages_read_stage_queue
+
+        Initialize empty lists for all_transfer_all_page, all_transfer_faulty_pages
+        Initialize empty maps for temp_req_info and block_tree
+
+        IF prefetcher is DISABLED or RANDOM THEN
+            FOR each faulted page in page_faults
+                Initialize a temp list containing this faulted page
+                Get page address and root node for the page
+                Update the basic block with page info
+                Add temp list to all_transfer_all_page and all_transfer_faulty_pages
+                Add page to temp_req_info
+
+                IF prefetcher is RANDOM THEN
+                    Calculate random prefetch address
+                    IF prefetch address is valid AND not in any request info
+                        Update block for prefetch page
+                        Add prefetch page to last entry in all_transfer_all_page
+                        Add page to temp_req_info
+
+        ELSE
+            Initialize empty map for lp_pf_groups
+            FOR each faulted page in page_faults
+                Get page address and root node of the page
+                Add page address to lp_pf_groups[root]
+
+            FOR each lp_pf_group in lp_pf_groups
+                Initialize empty sets and lists for schedulable blocks and pages
+                FOR each page in lp_pf_group
+                    Get page address, update basic block, and add block to schedulable_blocks
+                    Add page number to cur_transfer_faulty_pages
+
+                IF prefetcher is TBN THEN
+                    Traverse and fill lp_tree with schedulable blocks
+
+                FOR each basic block in schedulable_blocks
+                    Add to block access list
+                    FOR each page in basic block
+                        IF page not in temp_req_info THEN
+                            Add page to temp_req_info
+                            Add page to cur_transfer_all_pages
+
+                Add cur_transfer_all_pages and cur_transfer_faulty_pages to lists
+
+        FOR each entry in temp_req_info
+            Merge into req_info
+
+        FOR each transfer in all_transfer_all_page and all_transfer_faulty_pages
+            IF gap between pages OR page fault found THEN
+                Split and transfer scheduled pages
+
+        FOR each remaining page in all_transfer_all_page
+            Prefetch remaining pages in block
+
+        Update statistics for page_faults
+        IF should_evict_page THEN
+            Update memory management policy based on settings
+
+    END IF
+END FUNCTION
+
+*/
+
+// Input : Map from a memory address to list of all transactions to that address that faulted (contains memory addresses only if there are 1 or more transactions that faulted)
 void gmmu_t::do_hardware_prefetch (std::map<mem_addr_t, std::list<mem_fetch*> > &page_fault_this_turn) {
     // now decide on transfers as a group of page faults and prefetches
     if ( !page_fault_this_turn.empty() ) {
+        // Variable storing number of pages in read stage queue
         unsigned long long num_pages_read_stage_queue = 0;
 
         for ( std::list<pcie_latency_t*>::iterator iter = pcie_read_stage_queue.begin();
@@ -3572,58 +3644,65 @@ void gmmu_t::do_hardware_prefetch (std::map<mem_addr_t, std::list<mem_fetch*> > 
 	std::map<mem_addr_t, std::map<mem_addr_t, std::list<mem_addr_t> > > block_tree;
 
         if ( prefetcher == hwardware_prefetcher::DISBALED || prefetcher == hwardware_prefetcher::RANDOM ) {
+            // Iterate over entire map
             for ( std::map<mem_addr_t, std::list<mem_fetch*> >::iterator it = page_fault_this_turn.begin(); it != page_fault_this_turn.end(); it++) {
-                std::list<mem_addr_t> temp_pages;
-                temp_pages.push_back(it->first);
+                std::list<mem_addr_t> temp_pages; // Create a list, push the page address
+                temp_pages.push_back(it->first); 
 
-                mem_addr_t page_addr = m_gpu->get_global_memory()->get_mem_addr(it->first);
-                struct lp_tree_node* root = get_lp_node(page_addr);
-                update_basic_block(root, page_addr, m_config.page_size, true);
+                mem_addr_t page_addr = m_gpu->get_global_memory()->get_mem_addr(it->first); // Get global address (left shifted by global memory block size)
+                struct lp_tree_node* root = get_lp_node(page_addr); // Get root address of the large page which this address is a part of
+                update_basic_block(root, page_addr, m_config.page_size, true); // Extend address of valid range for all nodes upto leaf level, prefetch true
 
-                all_transfer_all_page.push_back(temp_pages);
+                all_transfer_all_page.push_back(temp_pages); // add faulted page add to both
                 all_transfer_faulty_pages.push_back(temp_pages);
 
-                temp_req_info[it->first];
+                temp_req_info[it->first]; // create a blank index in map
 
-		if( prefetcher == hwardware_prefetcher::RANDOM ) {
-                    struct lp_tree_node* root = get_lp_node(m_gpu->get_global_memory()->get_mem_addr(it->first));
+                if( prefetcher == hwardware_prefetcher::RANDOM ) {
+                            struct lp_tree_node* root = get_lp_node(m_gpu->get_global_memory()->get_mem_addr(it->first));
+                    // Select a random page
+                    size_t random_size = ( rand() % (root->size / m_config.page_size) ) * m_config.page_size;
 
-		    size_t random_size = ( rand() % (root->size / m_config.page_size) ) * m_config.page_size;
+                    if ( random_size > root->size ) {
+                                random_size -= root->size;
+                            }
 
-		    if ( random_size > root->size ) {
-                        random_size -= root->size;
+                    // Get page address (as root + random size)
+                    mem_addr_t prefetch_addr = root->addr + random_size;
+
+                    // Get page number
+                    mem_addr_t prefetch_page_num = m_gpu->get_global_memory()->get_page_num(prefetch_addr);
+                    
+                    // Page number is valid, prefetch address has not faulted already, prefetch address is not in prefetch list already
+                    if( !m_gpu->get_global_memory()->is_valid(prefetch_page_num) && 
+                    page_fault_this_turn.find(prefetch_addr) == page_fault_this_turn.end() &&
+                    temp_req_info.find(prefetch_page_num) == temp_req_info.end() &&
+                    req_info.find(prefetch_page_num) == req_info.end() ) {
+
+                                mem_addr_t page_addr = m_gpu->get_global_memory()->get_mem_addr(prefetch_page_num);
+                                struct lp_tree_node* root = get_lp_node(page_addr);
+                                update_basic_block(root, page_addr, m_config.page_size, true); // Extend address of valid range for all nodes upto leaf level, prefetch true
+
+                    all_transfer_all_page.back().push_back( prefetch_page_num ); // add to transfer_all_pages list
+
+                    temp_req_info[prefetch_page_num];   // add page to map
                     }
-
-		    mem_addr_t prefetch_addr = root->addr + random_size;
-
-		    mem_addr_t prefetch_page_num = m_gpu->get_global_memory()->get_page_num(prefetch_addr);
-		     
-		    if( !m_gpu->get_global_memory()->is_valid(prefetch_page_num) && 
-			page_fault_this_turn.find(prefetch_addr) == page_fault_this_turn.end() &&
-			temp_req_info.find(prefetch_page_num) == temp_req_info.end() &&
-			req_info.find(prefetch_page_num) == req_info.end() ) {
-
-                        mem_addr_t page_addr = m_gpu->get_global_memory()->get_mem_addr(prefetch_page_num);
-                        struct lp_tree_node* root = get_lp_node(page_addr);
-                        update_basic_block(root, page_addr, m_config.page_size, true);
-
-			all_transfer_all_page.back().push_back( prefetch_page_num );
-
-			temp_req_info[prefetch_page_num];
-		    }
-		}
+                }
             }
         } else {
+            // Sequential or TBN
             std::map<mem_addr_t, std::set<mem_addr_t> > lp_pf_groups;
 
+            // create map of tree root addresses to faulted page addresses in that tree 
             for ( std::map<mem_addr_t, std::list<mem_fetch*> >::iterator it = page_fault_this_turn.begin(); it != page_fault_this_turn.end(); it++) {
                 mem_addr_t page_addr = m_gpu->get_global_memory()->get_mem_addr(it->first);
                 
                 struct lp_tree_node* root = get_lp_node(page_addr);
-
+                // for current tree root address add the faulted page addresses that are part of the tree
                 lp_pf_groups[root->addr].insert(page_addr);
             }
 
+            // Iterate over that list
             for ( std::map<mem_addr_t, std::set<mem_addr_t> >::iterator lp_pf_iter = lp_pf_groups.begin(); lp_pf_iter != lp_pf_groups.end(); lp_pf_iter++ ) {
                 std::set<mem_addr_t> schedulable_basic_blocks;
 
