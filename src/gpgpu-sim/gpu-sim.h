@@ -57,6 +57,9 @@
 #define CONST_MSHR_MERGE 0x2
 #define GLOBAL_MSHR_MERGE 0x1
 
+#define GHB_SIZE 12
+#define GHB_EVICT_COUNT 2
+
 // clock constants
 #define MhZ *1000000
 
@@ -693,6 +696,8 @@ public:
    void reset_bb_round_trip();
    void update_access_type(mem_addr_t addr, int type);
 
+   void update_GHB(mem_addr_t addr, size_t evict_count);
+
    bool should_cause_page_migration(mem_addr_t addr, bool is_write);
 private:
    // data structure to wrap memory fetch and page table walk delay
@@ -720,6 +725,9 @@ private:
     // staging queue to hold the PCI-E requests waiting for scheduling
     std::list<pcie_latency_t*>       pcie_read_stage_queue;
     std::list<pcie_latency_t*>       pcie_write_stage_queue;
+
+    std::vector<mem_addr_t> GHB(GHB_SIZE, None); // Global History Buffer initialized with None
+    size_t count = 0;                      // Count of entries added to GHB
 
     // read queue for fetching the page from host side 
     // the request may be global memory's read (load)/ write (store)

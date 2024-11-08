@@ -2563,7 +2563,7 @@ void gmmu_t::fill_lp_tree(struct lp_tree_node* node, std::set<mem_addr_t>& sched
 	if (node->size == MIN_PREFETCH_SIZE) {
 		if (node->valid_size == 0) {
 			node->valid_size = MIN_PREFETCH_SIZE;
-			scheduled_basic_blocks.insert(node->addr);
+			scheduled_basic_blocks.insert(node->addr); // If block is invalid and of invalid size, add block to scheduled basic blocks
 		}
 	} else {
 		fill_lp_tree(node->left, scheduled_basic_blocks);
@@ -2577,7 +2577,7 @@ void gmmu_t::remove_lp_tree(struct lp_tree_node* node, std::set<mem_addr_t>& sch
 	if (node->size == MIN_PREFETCH_SIZE) {
 		if (node->valid_size == MIN_PREFETCH_SIZE && is_block_evictable(node->addr, MIN_PREFETCH_SIZE)) {
 			node->valid_size = 0;
-			scheduled_basic_blocks.insert(node->addr);
+			scheduled_basic_blocks.insert(node->addr); //if node size is small enough to be MIN_PREFETCH_SIZE and evictable, evict it and schedule a prefetch (insert in scheduled basic block)
 		}
 	} else {
 		remove_lp_tree(node->left, scheduled_basic_blocks);
@@ -3624,6 +3624,50 @@ END FUNCTION
 
 */
 
+void gmmu_t::update_GHB(mem_addr_t addr, size_t evict_count) {
+    // Ensure evict_count is not larger than the GHB size
+    evict_count = std::min(evict_count, GHB_SIZE);
+
+    auto it = std::find(GHB.begin(), GHB.end(), addr);
+
+    if (it != GHB.end()) {
+        // Address is already in GHB, perform eviction and shift
+        size_t addr_index = std::distance(GHB.begin(), it);
+
+        // Evict the current address and the next (evict_count - 1) addresses
+        for (size_t i = 0; i < evict_count; i++) {
+            size_t evict_index = (addr_index + i) % GHB_SIZE;
+            GHB[evict_index] = None;
+        }
+
+        // Shift remaining entries to fill the gap
+        for (size_t i = addr_index; i < GHB_SIZE - evict_count; i++) {
+            GHB[i] = GHB[i + evict_count];
+        }
+
+        // Set the last `evict_count` entries to None and add the new address at the end
+        for (size_t i = 1; i < evict_count; i++) {
+            GHB[GHB_SIZE - i] = None;
+        }
+        GHB[GHB_SIZE - evict_count] = addr;
+
+    } else {
+        // Normal addition to GHB
+        if (count < GHB_SIZE) {
+            GHB[count] = addr;
+            count++;
+        } else {
+            // GHB is full, so evict the oldest entry and shift others
+            for (size_t i = 0; i < GHB_SIZE - 1; i++) {
+                GHB[i] = GHB[i + 1];
+            }
+            // Place the new address at the last position
+            GHB[GHB_SIZE - 1] = addr;
+        }
+    }
+}
+
+
 // Input : Map from a memory address to list of all transactions to that address that faulted (contains memory addresses only if there are 1 or more transactions that faulted)
 void gmmu_t::do_hardware_prefetch (std::map<mem_addr_t, std::list<mem_fetch*> > &page_fault_this_turn) {
     // now decide on transfers as a group of page faults and prefetches
@@ -3685,7 +3729,7 @@ void gmmu_t::do_hardware_prefetch (std::map<mem_addr_t, std::list<mem_fetch*> > 
 
                     all_transfer_all_page.back().push_back( prefetch_page_num ); // add to transfer_all_pages list
 
-                    temp_req_info[prefetch_page_num];   // add page to map
+                    temp_req_info[prefetch_page_num];   // add prefetch page to map
                     }
                 }
             }
@@ -3711,34 +3755,61 @@ void gmmu_t::do_hardware_prefetch (std::map<mem_addr_t, std::list<mem_fetch*> > 
                 std::list<mem_addr_t> cur_transfer_faulty_pages;
 
                 for ( std::set<mem_addr_t>::iterator pf_iter = lp_pf_iter->second.begin(); pf_iter != lp_pf_iter->second.end(); pf_iter++) {
-                    mem_addr_t page_addr = *pf_iter;
+                    mem_addr_t page_addr = *pf_iter; // Faulted address in current page
 
-                    struct lp_tree_node* root = get_lp_node(page_addr);
+                    struct lp_tree_node* root = get_lp_node(page_addr); // Get the large page
 
-                    mem_addr_t bb_addr = update_basic_block(root, page_addr, MIN_PREFETCH_SIZE, true);
+                    mem_addr_t bb_addr = update_basic_block(root, page_addr, MIN_PREFETCH_SIZE, true); // Update for faulted address
 
-                    schedulable_basic_blocks.insert(bb_addr);
+                    schedulable_basic_blocks.insert(bb_addr); // basic block address -> insert in this list
 
-                    cur_transfer_faulty_pages.push_back(m_gpu->get_global_memory()->get_page_num(page_addr));
+                    cur_transfer_faulty_pages.push_back(m_gpu->get_global_memory()->get_page_num(page_addr)); // add current transfer faulty page
                 }
 
                 if ( prefetcher == hwardware_prefetcher::TBN ) {
-                    struct lp_tree_node* root = get_lp_node(lp_pf_iter->first);
-                    traverse_and_fill_lp_tree(root, schedulable_basic_blocks);
+                    for (auto it = page_fault_this_turn.begin(); it != page_fault_this_turn.end(); ++it) {
+                        mem_addr_t faulted_page_addr = it->first;
+
+                        // Update the GHB with the faulted address
+                        update_GHB(faulted_page_addr, GHB_EVICT_COUNT);
+
+                        std::list<mem_addr_t> cur_transfer_all_pages;
+                        std::list<mem_addr_t> cur_transfer_faulty_pages;
+                        cur_transfer_faulty_pages.push_back(faulted_page_addr);
+
+                        // Prefetch addresses based on the GHB content
+                        for (mem_addr_t ghb_addr : GHB) {
+                            if (ghb_addr != None &&
+                                temp_req_info.find(ghb_addr) == temp_req_info.end() &&
+                                page_fault_this_turn.find(ghb_addr) == page_fault_this_turn.end()) {
+
+                                // Add GHB address to prefetch list
+                                cur_transfer_all_pages.push_back(ghb_addr);
+                                temp_req_info[ghb_addr]; // Track this prefetch in the map
+                            }
+                        }
+
+                        all_transfer_all_page.push_back(cur_transfer_all_pages);
+                        all_transfer_faulty_pages.push_back(cur_transfer_faulty_pages);
+                    }
+                    // struct lp_tree_node* root = get_lp_node(lp_pf_iter->first);
+                    // traverse_and_fill_lp_tree(root, schedulable_basic_blocks); // add more stuff to schedulable basic block
                 }
-
+                // Loop over all basic block addresses of all faulted addresses
                 for (std::set<mem_addr_t>::iterator bb = schedulable_basic_blocks.begin(); bb != schedulable_basic_blocks.end(); bb++) {
+                    // list of scheduled basic blocks by their timestamps
+		            block_access_list.push_back(std::make_pair(gpu_tot_sim_cycle + gpu_sim_cycle, *bb)); // These are counted externally
 
-		    block_access_list.push_back(std::make_pair(gpu_tot_sim_cycle + gpu_sim_cycle, *bb));
-
-                    // all the invalid pages in the current 64 K basic block of transfer
+                    // all the invalid pages in the current 64K basic block of transfer
+                    // get all invalid pages in this block (starting from current address) upto the minimum prefetch size
+                    // everything in the basic 64KB block is fetched
                     std::list<mem_addr_t> all_block_pages = m_gpu->get_global_memory()->get_faulty_pages( *bb, MIN_PREFETCH_SIZE );
                     
                     for ( std::list<mem_addr_t>::iterator pg_iter = all_block_pages.begin(); pg_iter != all_block_pages.end(); pg_iter++ ) {
                         if (temp_req_info.find(*pg_iter) == temp_req_info.end()) {
                             // mark entry into mshr for all pages in the current basic block
-                            temp_req_info[*pg_iter];
-                            cur_transfer_all_pages.push_back(*pg_iter);
+                            temp_req_info[*pg_iter]; // mark for prefetch if not done earlier
+                            cur_transfer_all_pages.push_back(*pg_iter); // add for prefetch
                         }
                     } 
                 }
