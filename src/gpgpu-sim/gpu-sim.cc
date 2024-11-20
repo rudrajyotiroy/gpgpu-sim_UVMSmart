@@ -1999,6 +1999,8 @@ gmmu_t::gmmu_t(class gpgpu_sim* gpu, const gpgpu_sim_config &config, class gpgpu
     pcie_read_latency_queue = NULL;
     pcie_write_latency_queue = NULL;
 
+    GHB.reserve(GHB_SIZE);
+
     total_allocation_size = 0;
 
     over_sub = false;
@@ -3626,7 +3628,7 @@ END FUNCTION
 
 void gmmu_t::update_GHB(mem_addr_t addr, size_t evict_count) {
     // Ensure evict_count is not larger than the GHB size
-    evict_count = std::min(evict_count, GHB_SIZE);
+    evict_count = evict_count > GHB_SIZE ? GHB_SIZE : evict_count;
 
     auto it = std::find(GHB.begin(), GHB.end(), addr);
 
@@ -3637,7 +3639,7 @@ void gmmu_t::update_GHB(mem_addr_t addr, size_t evict_count) {
         // Evict the current address and the next (evict_count - 1) addresses
         for (size_t i = 0; i < evict_count; i++) {
             size_t evict_index = (addr_index + i) % GHB_SIZE;
-            GHB[evict_index] = None;
+            GHB[evict_index] = NULL;
         }
 
         // Shift remaining entries to fill the gap
@@ -3645,9 +3647,9 @@ void gmmu_t::update_GHB(mem_addr_t addr, size_t evict_count) {
             GHB[i] = GHB[i + evict_count];
         }
 
-        // Set the last `evict_count` entries to None and add the new address at the end
+        // Set the last `evict_count` entries to NULL and add the new address at the end
         for (size_t i = 1; i < evict_count; i++) {
-            GHB[GHB_SIZE - i] = None;
+            GHB[GHB_SIZE - i] = NULL;
         }
         GHB[GHB_SIZE - evict_count] = addr;
 
@@ -3779,13 +3781,14 @@ void gmmu_t::do_hardware_prefetch (std::map<mem_addr_t, std::list<mem_fetch*> > 
 
                         // Prefetch addresses based on the GHB content
                         for (mem_addr_t ghb_addr : GHB) {
-                            if (ghb_addr != None &&
-                                temp_req_info.find(ghb_addr) == temp_req_info.end() &&
+                            if (ghb_addr != NULL){
+                                if(temp_req_info.find(ghb_addr) == temp_req_info.end() &&
                                 page_fault_this_turn.find(ghb_addr) == page_fault_this_turn.end()) {
 
-                                // Add GHB address to prefetch list
-                                cur_transfer_all_pages.push_back(ghb_addr);
-                                temp_req_info[ghb_addr]; // Track this prefetch in the map
+                                    // Add GHB address to prefetch list
+                                    cur_transfer_all_pages.push_back(ghb_addr);
+                                    temp_req_info[ghb_addr]; // Track this prefetch in the map
+                                }
                             }
                         }
 

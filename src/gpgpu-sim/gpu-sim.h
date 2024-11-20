@@ -56,9 +56,8 @@
 #define TEX_MSHR_MERGE 0x4
 #define CONST_MSHR_MERGE 0x2
 #define GLOBAL_MSHR_MERGE 0x1
-
-#define GHB_SIZE 12
-#define GHB_EVICT_COUNT 2
+#define GHB_SIZE 0xf
+#define GHB_EVICT_COUNT 0x2
 
 // clock constants
 #define MhZ *1000000
@@ -725,8 +724,7 @@ private:
     // staging queue to hold the PCI-E requests waiting for scheduling
     std::list<pcie_latency_t*>       pcie_read_stage_queue;
     std::list<pcie_latency_t*>       pcie_write_stage_queue;
-
-    std::vector<mem_addr_t> GHB(GHB_SIZE, None); // Global History Buffer initialized with None
+    std::vector<mem_addr_t> GHB; // Global History Buffer initialized with None
     size_t count = 0;                      // Count of entries added to GHB
 
     // read queue for fetching the page from host side 
