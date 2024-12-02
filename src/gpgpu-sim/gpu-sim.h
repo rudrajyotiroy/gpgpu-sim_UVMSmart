@@ -56,8 +56,8 @@
 #define TEX_MSHR_MERGE 0x4
 #define CONST_MSHR_MERGE 0x2
 #define GLOBAL_MSHR_MERGE 0x1
-#define GHB_SIZE 0xf
-#define GHB_EVICT_COUNT 0x2
+#define GHB_SIZE 0xff
+#define GHB_EVICT_COUNT 0x8
 
 // clock constants
 #define MhZ *1000000
