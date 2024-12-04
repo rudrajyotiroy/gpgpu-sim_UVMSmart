@@ -1,0 +1,298 @@
+12.71 g++  -c -O3 -g3 -Wall -Wno-unused-function -Wno-sign-compare -I/usr/local/cuda-8.0/include  -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ -I. -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release -fPIC  -DTRACING_ON=1 -DCUDART_VERSION=8000 -std=c++0x memory.cc -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/memory.o
+13.13 g++  -c -O3 -g3 -Wall -Wno-unused-function -Wno-sign-compare -I/usr/local/cuda-8.0/include  -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ -I. -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release -fPIC  -DTRACING_ON=1 -DCUDART_VERSION=8000 -std=c++0x ptx-stats.cc -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ptx-stats.o
+13.25 g++  -c -O3 -g3 -Wall -Wno-unused-function -Wno-sign-compare -I/usr/local/cuda-8.0/include  -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ -I. -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release -fPIC  -DTRACING_ON=1 -DCUDART_VERSION=8000 -std=c++0x decuda_pred_table/decuda_pred_table.cc -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/decuda_pred_table/decuda_pred_table.o
+13.31 g++  -c -O3 -g3 -Wall -Wno-unused-function -Wno-sign-compare -I/usr/local/cuda-8.0/include  -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ -I. -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release -fPIC  -DTRACING_ON=1 -DCUDART_VERSION=8000 -DYYDEBUG /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ptx.tab.c -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ptx.tab.o
+13.31 flex --outfile=/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/lex.ptx_.c ptx.l 
+13.31 ptx.l:151: undeclared start condition IN_INST
+13.33 ptx.l:187: warning, rule cannot be matched
+13.36 bison --name-prefix=ptxinfo_ -v -d ptxinfo.y --file-prefix=/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ptxinfo
+13.36 ptxinfo.y: warning: 2 reduce/reduce conflicts [-Wconflicts-rr]
+13.41 flex --outfile=/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/lex.ptxinfo_.c ptxinfo.l 
+13.44 g++  -c -O3 -g3 -Wall -Wno-unused-function -Wno-sign-compare -I/usr/local/cuda-8.0/include  -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ -I. -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release -fPIC  -DTRACING_ON=1 -DCUDART_VERSION=8000 -std=c++0x cuda_device_runtime.cc -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/cuda_device_runtime.o
+13.49 cat /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ptx.tab.h | grep "=" | sed 's/^[ ]\+//' | sed 's/[=,]//g' | sed 's/\([_A-Z1-9]\+\)[ ]\+\([0-9]\+\)/\1 \1/' | sed 's/^/DEF(/' | sed 's/ /,"/' | sed 's/$/")/' > /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ptx_parser_decode.def
+13.52 g++  -c -O3 -g3 -Wall -Wno-unused-function -Wno-sign-compare -I/usr/local/cuda-8.0/include  -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ -I. -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release -fPIC  -DTRACING_ON=1 -DCUDART_VERSION=8000 -std=c++0x cuda_device_printf.cc -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/cuda_device_printf.o
+14.02 g++  -c -O3 -g3 -Wall -Wno-unused-function -Wno-sign-compare -I/usr/local/cuda-8.0/include  -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ -I. -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release -fPIC  -DTRACING_ON=1 -DCUDART_VERSION=8000 -std=c++0x instructions.cc -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/instructions.o
+14.16 g++  -c -O3 -g3 -Wall -Wno-unused-function -Wno-sign-compare -I/usr/local/cuda-8.0/include  -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ -I. -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release -fPIC  -DTRACING_ON=1 -DCUDART_VERSION=8000 -std=c++0x ptx_ir.cc -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ptx_ir.o
+14.70 g++  -c -O3 -g3 -Wall -Wno-unused-function -Wno-sign-compare -I/usr/local/cuda-8.0/include  -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ -I. -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release -fPIC  -DTRACING_ON=1 -DCUDART_VERSION=8000 /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/lex.ptx_.c -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/lex.ptx_.o
+15.15 g++  -c -O3 -g3 -Wall -Wno-unused-function -Wno-sign-compare -I/usr/local/cuda-8.0/include  -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ -I. -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release -fPIC  -DTRACING_ON=1 -DCUDART_VERSION=8000 -DYYDEBUG /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ptxinfo.tab.c -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ptxinfo.tab.o
+15.64 g++  -c -O3 -g3 -Wall -Wno-unused-function -Wno-sign-compare -I/usr/local/cuda-8.0/include  -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ -I. -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release -fPIC  -DTRACING_ON=1 -DCUDART_VERSION=8000 /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/lex.ptxinfo_.c -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/lex.ptxinfo_.o
+15.98 g++  -c -O3 -g3 -Wall -Wno-unused-function -Wno-sign-compare -I/usr/local/cuda-8.0/include  -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ -I. -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release -fPIC  -DTRACING_ON=1 -DCUDART_VERSION=8000 -std=c++0x ptx_parser.cc -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ptx_parser.o
+15.98 g++  -c -O3 -g3 -Wall -Wno-unused-function -Wno-sign-compare -I/usr/local/cuda-8.0/include  -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ -I. -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release -fPIC  -DTRACING_ON=1 -DCUDART_VERSION=8000 -std=c++0x ptx_loader.cc -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ptx_loader.o
+17.07 cuda_device_runtime.cc: In function 'void gpgpusim_cuda_streamCreateWithFlags(const ptx_instruction*, ptx_thread_info*, const function_info*)':
+17.07 cuda_device_runtime.cc:288:88: warning: 'pStream_addr' may be used uninitialized in this function [-Wmaybe-uninitialized]
+17.07      thread->m_local_mem->write(pStream_addr, sizeof(cudaStream_t), &stream, NULL, NULL);
+17.07                                                                                         ^
+17.14 ptx_ir.cc: In member function 'unsigned int function_info::print_insn(unsigned int, FILE*) const':
+17.14 ptx_ir.cc:1321:26: warning: ignoring return value of 'char* fgets(char*, int, FILE*)', declared with attribute warn_unused_result [-Wunused-result]
+17.14     fgets(buffer, 1023, p);
+17.14                           ^
+17.26 cuda_device_runtime.cc: In function 'void gpgpusim_cuda_getParameterBufferV2(const ptx_instruction*, ptx_thread_info*, const function_info*)':
+17.26 cuda_device_runtime.cc:128:72: warning: 'child_kernel_entry' may be used uninitialized in this function [-Wmaybe-uninitialized]
+17.26      g_cuda_device_launch_param_map[param_buffer] = device_launch_config;
+17.26                                                                         ^
+18.93 ptx_loader.cc: In function 'void fix_duplicate_errors(char*)':
+18.93 ptx_loader.cc:206:40: warning: ignoring return value of 'size_t fread(void*, size_t, size_t, FILE*)', declared with attribute warn_unused_result [-Wunused-result]
+18.93   fread(ptxdata, filesize, 1, ptxsource);
+18.93                                         ^
+19.23 ptx_loader.cc:242:52: warning: 'funcptr' may be used uninitialized in this function [-Wmaybe-uninitialized]
+19.23     fwrite(startptr, sizeof(char), funcptr - offset + 1 - startptr, ptxdest);
+19.23                                                     ^
+21.04 ar rcs /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/libgpgpu_ptx_sim.a /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ptx.tab.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/lex.ptx_.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ptxinfo.tab.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/lex.ptxinfo_.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ptx_parser.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ptx_loader.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/cuda_device_printf.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/instructions.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/cuda-sim.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ptx_ir.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ptx_sim.o  /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/memory.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ptx-stats.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/decuda_pred_table/decuda_pred_table.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ptx.tab.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/lex.ptx_.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/ptxinfo.tab.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/lex.ptxinfo_.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuda-sim/cuda_device_runtime.o
+21.15 make[1]: Leaving directory '/root/uvmsmart/src/cuda-sim'
+21.16 make -C ./src/gpgpu-sim/ depend
+21.16 make -C ./libcuda/ depend
+21.16 make -C ./cuobjdump_to_ptxplus/ depend
+21.16 make[1]: Entering directory '/root/uvmsmart/src/gpgpu-sim'
+21.16 make[1]: Entering directory '/root/uvmsmart/libcuda'
+21.16 Makefile:92: /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/Makefile.makedepend: No such file or directory
+21.16 make[1]: Entering directory '/root/uvmsmart/cuobjdump_to_ptxplus'
+21.16 touch /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/Makefile.makedepend
+21.16 makedepend -f/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/Makefile.makedepend cuobjdumpInst.cc cuobjdumpInstList.cc cuobjdump_to_ptxplus.cc 2> /dev/null
+21.16 make[1]: 'depend' is up to date.
+21.16 make[1]: Leaving directory '/root/uvmsmart/cuobjdump_to_ptxplus'
+21.16 make -C ./cuobjdump_to_ptxplus/
+21.17 make[1]: Entering directory '/root/uvmsmart/cuobjdump_to_ptxplus'
+21.17 g++ -ggdb -fPIC -Wall -Wno-unused-function -Wno-sign-compare  -I /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus -I /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/../cuda-sim/ -I . -I ../src/cuda-sim/ -c -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/cuobjdumpInst.o cuobjdumpInst.cc
+21.17 g++ -ggdb -fPIC -Wall -Wno-unused-function -Wno-sign-compare  -I /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus -I /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/../cuda-sim/ -I . -I ../src/cuda-sim/ -c -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/cuobjdumpInstList.o cuobjdumpInstList.cc
+21.17 g++ -ggdb -fPIC -Wall -Wno-unused-function -Wno-sign-compare  -I /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus -I /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/../cuda-sim/ -I . -I ../src/cuda-sim/ -c -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/cuobjdump_to_ptxplus.o cuobjdump_to_ptxplus.cc
+21.17 bison -t -d --report=all --verbose --name-prefix=ptx_ -v ../src/cuda-sim/ptx.y  --file-prefix=/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/ptx
+21.17 flex -B  -o/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/lex.ptx_.c ../src/cuda-sim/ptx.l
+21.17 bison -t -d --report=all --verbose -p sass_ -o/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/sass_parser.cc sass.y --file-prefix=/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus//root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/sass_parser.cc
+21.17 bison -t -d --report=all --verbose -p elf_ -o/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/elf_parser.cc elf.y --file-prefix=/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus//root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/elf_parser.cc
+21.17 bison -t -d --report=all --verbose -p header_ -o/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/header_parser.cc header.y --file-prefix=/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus//root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/header_parser.cc
+21.17 ../src/cuda-sim/ptx.l:151: undeclared start condition IN_INST
+21.17 ../src/cuda-sim/ptx.y: warning: 1 shift/reduce conflict [-Wconflicts-sr]
+21.17 ../src/cuda-sim/ptx.y: warning: 57 reduce/reduce conflicts [-Wconflicts-rr]
+21.17 ../src/cuda-sim/ptx.y:255.11-88: warning: rule useless in parser due to conflicts [-Wother]
+21.17   | WEAK_DIRECTIVE FUNC_DIRECTIVE { $$ = 0; g_func_decl=1; func_header(".func"); }
+21.18            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+21.18 ../src/cuda-sim/ptx.l:187: warning, rule cannot be matched
+21.20 Makefile:143: /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/Makefile.makedepend: No such file or directory
+21.20 touch /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/Makefile.makedepend
+21.21 makedepend -f/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/Makefile.makedepend -p/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/ cuda_runtime_api.cc 2> /dev/null
+21.21 Makefile:104: /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/Makefile.makedepend: No such file or directory
+21.22 touch /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/Makefile.makedepend
+21.22 make[1]: 'depend' is up to date.
+21.22 make[1]: Leaving directory '/root/uvmsmart/libcuda'
+21.22 make -C ./libcuda/
+21.22 makedepend -f/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/Makefile.makedepend -p/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/ addrdec.cc dram.cc dram_sched.cc gpu-cache.cc gpu-misc.cc gpu-sim.cc histogram.cc icnt_wrapper.cc l2cache.cc mem_fetch.cc mem_latency_stat.cc power_interface.cc power_stat.cc scoreboard.cc shader.cc stack.cc stat-tool.cc traffic_breakdown.cc visualizer.cc 2> /dev/null
+21.23 g++ -ggdb -fPIC -Wall -Wno-unused-function -Wno-sign-compare  -I /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus -I /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/../cuda-sim/ -I . -I ../src/cuda-sim/ -c -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/header_parser.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/header_parser.cc
+21.23 :
+21.23 flex -B  -P header_ -o/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/header_lexer.cc header.l
+21.23 make[1]: Entering directory '/root/uvmsmart/libcuda'
+21.23 :
+21.23 flex -B  -P elf_ -o/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/elf_lexer.cc elf.l
+21.23 g++ -ggdb -fPIC -Wall -Wno-unused-function -Wno-sign-compare  -I /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus -I /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/../cuda-sim/ -I . -I ../src/cuda-sim/ -c -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/elf_parser.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/elf_parser.cc
+21.24 g++ -ggdb -fPIC -Wall -Wno-unused-function -Wno-sign-compare  -I /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus -I /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/../cuda-sim/ -I . -I ../src/cuda-sim/ -c -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/header_lexer.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/header_lexer.cc
+21.25 make[1]: 'depend' is up to date.
+21.25 make[1]: Leaving directory '/root/uvmsmart/src/gpgpu-sim'
+21.25 make -C ./src/gpgpu-sim/
+21.25 make[1]: Entering directory '/root/uvmsmart/src/gpgpu-sim'
+21.27 g++ -ggdb -fPIC -Wall -Wno-unused-function -Wno-sign-compare  -I /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus -I /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/../cuda-sim/ -I . -I ../src/cuda-sim/ -c -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/elf_lexer.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/elf_lexer.cc
+21.30 touch /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/Makefile.makedepend
+21.30 makedepend -f/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/Makefile.makedepend -p/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/ cuda_runtime_api.cc 2> /dev/null
+21.32 g++  -std=c++0x -O3 -g -Wall -Wno-unused-function -Wno-sign-compare -fPIC  -DCUDART_VERSION=8000 -I./ -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda -I/usr/local/cuda-8.0/include  -c cuda_runtime_api.cc -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/cuda_runtime_api.o
+21.32 bison -t -d -v --report=all -p cuobjdump_  -o/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/cuobjdump_parser.c cuobjdump.y --file-prefix=/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/cuobjdump
+21.33 touch /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/Makefile.makedepend
+21.33 makedepend -f/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/Makefile.makedepend -p/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/ addrdec.cc dram.cc dram_sched.cc gpu-cache.cc gpu-misc.cc gpu-sim.cc histogram.cc icnt_wrapper.cc l2cache.cc mem_fetch.cc mem_latency_stat.cc power_interface.cc power_stat.cc scoreboard.cc shader.cc stack.cc stat-tool.cc traffic_breakdown.cc visualizer.cc 2> /dev/null
+21.36 cuobjdump_to_ptxplus.cc: In function 'void output(const char*)':
+21.36 cuobjdump_to_ptxplus.cc:57:27: warning: format not a string literal and no format arguments [-Wformat-security]
+21.36   fprintf(ptxplus_out, text);
+21.36                            ^
+21.36 g++  -O3 -g3 -fPIC -DCUDART_VERSION=8000 -Wall -DTRACING_ON=1 -std=c++0x -I/root/uvmsmart/src/gpuwattch/ -DGPGPUSIM_POWER_MODEL -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/addrdec.o -c addrdec.cc
+21.36 g++  -O3 -g3 -fPIC -DCUDART_VERSION=8000 -Wall -DTRACING_ON=1 -std=c++0x -I/root/uvmsmart/src/gpuwattch/ -DGPGPUSIM_POWER_MODEL -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/dram.o -c dram.cc
+21.36 g++  -O3 -g3 -fPIC -DCUDART_VERSION=8000 -Wall -DTRACING_ON=1 -std=c++0x -I/root/uvmsmart/src/gpuwattch/ -DGPGPUSIM_POWER_MODEL -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/dram_sched.o -c dram_sched.cc
+21.36 g++  -O3 -g3 -fPIC -DCUDART_VERSION=8000 -Wall -DTRACING_ON=1 -std=c++0x -I/root/uvmsmart/src/gpuwattch/ -DGPGPUSIM_POWER_MODEL -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/gpu-cache.o -c gpu-cache.cc
+21.36 g++  -O3 -g3 -fPIC -DCUDART_VERSION=8000 -Wall -DTRACING_ON=1 -std=c++0x -I/root/uvmsmart/src/gpuwattch/ -DGPGPUSIM_POWER_MODEL -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/gpu-misc.o -c gpu-misc.cc
+21.36 g++  -O3 -g3 -fPIC -DCUDART_VERSION=8000 -Wall -DTRACING_ON=1 -std=c++0x -I/root/uvmsmart/src/gpuwattch/ -DGPGPUSIM_POWER_MODEL -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/gpu-sim.o -c gpu-sim.cc
+21.37 g++  -O3 -g3 -fPIC -DCUDART_VERSION=8000 -Wall -DTRACING_ON=1 -std=c++0x -I/root/uvmsmart/src/gpuwattch/ -DGPGPUSIM_POWER_MODEL -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/histogram.o -c histogram.cc
+21.37 g++  -O3 -g3 -fPIC -DCUDART_VERSION=8000 -Wall -DTRACING_ON=1 -std=c++0x -I/root/uvmsmart/src/gpuwattch/ -DGPGPUSIM_POWER_MODEL -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/icnt_wrapper.o -c icnt_wrapper.cc
+21.43 cuobjdumpInstList.cc: In member function 'std::__cxx11::string cuobjdumpInstList::parseCuobjdumpRegister(std::__cxx11::string, bool, int)':
+21.43 cuobjdumpInstList.cc:508:21: warning: format not a string literal and no format arguments [-Wformat-security]
+21.43    printf(reg.c_str());
+21.43                      ^
+21.43 g++  -O3 -g3 -fPIC -DCUDART_VERSION=8000 -Wall -DTRACING_ON=1 -std=c++0x -I/root/uvmsmart/src/gpuwattch/ -DGPGPUSIM_POWER_MODEL -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/l2cache.o -c l2cache.cc
+21.43 cuobjdumpInst.cc: In member function 'void cuobjdumpInst::printCuobjdumpPtxPlus(std::__cxx11::list<std::__cxx11::basic_string<char> >, std::__cxx11::list<std::__cxx11::basic_string<char> >)':
+21.43 cuobjdumpInst.cc:2086:24: warning: format not a string literal and no format arguments [-Wformat-security]
+21.43    printf(m_base.c_str());
+21.43                         ^
+21.47 :
+21.47 flex -B  -P cuobjdump_ -o/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/cuobjdump_lexer.c cuobjdump.l
+21.51 gcc  -Wall -Wno-unused-function -Wno-sign-compare -fPIC -I./ -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda -I/usr/local/cuda-8.0/include  -c /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/cuobjdump_parser.c -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/cuobjdump_parser.o
+21.53 g++  -O3 -g3 -fPIC -DCUDART_VERSION=8000 -Wall -DTRACING_ON=1 -std=c++0x -I/root/uvmsmart/src/gpuwattch/ -DGPGPUSIM_POWER_MODEL -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/mem_fetch.o -c mem_fetch.cc
+21.59 g++  -O3 -g3 -fPIC -DCUDART_VERSION=8000 -Wall -DTRACING_ON=1 -std=c++0x -I/root/uvmsmart/src/gpuwattch/ -DGPGPUSIM_POWER_MODEL -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/mem_latency_stat.o -c mem_latency_stat.cc
+21.66 g++ -ggdb -fPIC -Wall -Wno-unused-function -Wno-sign-compare  -I /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus -I /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/../cuda-sim/ -I . -I ../src/cuda-sim/ -c /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/ptx.tab.c -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/ptx.tab.o
+21.68 gcc  -Wall -Wno-unused-function -Wno-sign-compare -fPIC -I./ -I/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda -I/usr/local/cuda-8.0/include  -c /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/cuobjdump_lexer.c -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/cuobjdump_lexer.o
+21.69 g++ -ggdb -fPIC -Wall -Wno-unused-function -Wno-sign-compare  -I /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus -I /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/../cuda-sim/ -I . -I ../src/cuda-sim/ -c /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/lex.ptx_.c -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/lex.ptx_.o
+21.70 :
+21.70 flex -B  -P sass_ -o/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/sass_lexer.cc sass.l
+21.74 g++ -ggdb -fPIC -Wall -Wno-unused-function -Wno-sign-compare  -I /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus -I /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/../cuda-sim/ -I . -I ../src/cuda-sim/ -c -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/sass_parser.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/sass_parser.cc
+21.76 g++ -ggdb -fPIC -Wall -Wno-unused-function -Wno-sign-compare  -I /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus -I /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/../cuda-sim/ -I . -I ../src/cuda-sim/ -c -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/sass_lexer.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/sass_lexer.cc
+21.88 g++  -O3 -g3 -fPIC -DCUDART_VERSION=8000 -Wall -DTRACING_ON=1 -std=c++0x -I/root/uvmsmart/src/gpuwattch/ -DGPGPUSIM_POWER_MODEL -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/power_interface.o -c power_interface.cc
+21.89 g++  -O3 -g3 -fPIC -DCUDART_VERSION=8000 -Wall -DTRACING_ON=1 -std=c++0x -I/root/uvmsmart/src/gpuwattch/ -DGPGPUSIM_POWER_MODEL -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/power_stat.o -c power_stat.cc
+22.15 g++  -O3 -g3 -fPIC -DCUDART_VERSION=8000 -Wall -DTRACING_ON=1 -std=c++0x -I/root/uvmsmart/src/gpuwattch/ -DGPGPUSIM_POWER_MODEL -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/scoreboard.o -c scoreboard.cc
+22.25 g++  -O3 -g3 -fPIC -DCUDART_VERSION=8000 -Wall -DTRACING_ON=1 -std=c++0x -I/root/uvmsmart/src/gpuwattch/ -DGPGPUSIM_POWER_MODEL -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/shader.o -c shader.cc
+22.38 g++  -O3 -g3 -fPIC -DCUDART_VERSION=8000 -Wall -DTRACING_ON=1 -std=c++0x -I/root/uvmsmart/src/gpuwattch/ -DGPGPUSIM_POWER_MODEL -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/stack.o -c stack.cc
+22.43 g++  -O3 -g3 -fPIC -DCUDART_VERSION=8000 -Wall -DTRACING_ON=1 -std=c++0x -I/root/uvmsmart/src/gpuwattch/ -DGPGPUSIM_POWER_MODEL -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/stat-tool.o -c stat-tool.cc
+22.50 g++  -O3 -g3 -fPIC -DCUDART_VERSION=8000 -Wall -DTRACING_ON=1 -std=c++0x -I/root/uvmsmart/src/gpuwattch/ -DGPGPUSIM_POWER_MODEL -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/traffic_breakdown.o -c traffic_breakdown.cc
+22.68 g++  -O3 -g3 -fPIC -DCUDART_VERSION=8000 -Wall -DTRACING_ON=1 -std=c++0x -I/root/uvmsmart/src/gpuwattch/ -DGPGPUSIM_POWER_MODEL -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/visualizer.o -c visualizer.cc
+22.77 g++ -ggdb -fPIC -Wall -Wno-unused-function -Wno-sign-compare  -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/cuobjdump_to_ptxplus /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/cuobjdumpInst.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/cuobjdumpInstList.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/cuobjdump_to_ptxplus.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/ptx.tab.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/lex.ptx_.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/sass_lexer.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/sass_parser.o  /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/elf_lexer.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/elf_parser.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/header_parser.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/cuobjdump_to_ptxplus/header_lexer.o
+23.11 make[1]: Leaving directory '/root/uvmsmart/cuobjdump_to_ptxplus'
+24.65 In file included from gpu-sim.cc:40:0:
+24.65 gpu-sim.cc: In member function 'bool shader_core_ctx::occupy_shader_resource_1block(kernel_info_t&, bool)':
+24.65 shader_trace.h:39:63: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+24.65  #define SHADER_DTRACE(x)  (DTRACE(x) && (Trace::sampling_core == get_sid()\
+24.65                                                                ^
+24.65 shader_trace.h:45:9: note: in expansion of macro 'SHADER_DTRACE'
+24.65      if (SHADER_DTRACE(x)) {\
+24.65          ^
+24.65 gpu-sim.cc:1407:7: note: in expansion of macro 'SHADER_DPRINTF'
+24.65        SHADER_DPRINTF(LIVENESS, "GPGPU-Sim uArch: Occupied %d threads, %d shared mem, %d registers, %d ctas\n",
+24.65        ^
+24.66 gpu-sim.cc: In member function 'void shader_core_ctx::issue_block2core(kernel_info_t&)':
+24.66 shader_trace.h:39:63: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+24.66  #define SHADER_DTRACE(x)  (DTRACE(x) && (Trace::sampling_core == get_sid()\
+24.66                                                                ^
+24.66 shader_trace.h:45:9: note: in expansion of macro 'SHADER_DTRACE'
+24.66      if (SHADER_DTRACE(x)) {\
+24.66          ^
+24.66 gpu-sim.cc:1533:5: note: in expansion of macro 'SHADER_DPRINTF'
+24.66      SHADER_DPRINTF(LIVENESS, "GPGPU-Sim uArch: cta:%2u, start_tid:%4u, end_tid:%4u, initialized @(%lld,%lld)\n", 
+24.66      ^
+24.68 gpu-sim.cc: In member function 'void gpgpu_new_stats::print_time_and_access(FILE*) const':
+24.68 gpu-sim.cc:1683:143: warning: format '%u' expects argument of type 'unsigned int', but argument 5 has type 'size_t {aka long unsigned int}' [-Wformat=]
+24.68   fprintf(fout, "%u 0x%x %u %llu %d %u %u\n", iter->page_no, iter->mem_addr, iter->size, iter->cycle, iter->is_read, iter->sm_id, iter->warp_id);
+24.68                                                                                                                                                ^
+24.83 gpu-sim.cc: In member function 'long long unsigned int gmmu_t::get_ready_cycle_dma(unsigned int)':
+24.83 gpu-sim.cc:2435:10: warning: unused variable 'speed' [-Wunused-variable]
+24.83     float speed = 2.0 * m_config.curve_a / M_PI * atan (m_config.curve_b * ((float)(size)/1024.0) );
+24.83           ^
+24.94 cuda_runtime_api.cc: In function 'cudaError_t cudaMallocManaged(void**, size_t, unsigned int)':
+24.94 cuda_runtime_api.cc:516:60: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]
+24.94          mem_addr_t tempGPUPtr = *((mem_addr_t*)(&gpuMemPtr));
+24.94                                                             ^
+24.95 cuda_runtime_api.cc: In function 'cudaError_t cudaMemPrefetchAsync(const void*, size_t, int, cudaStream_t)':
+24.95 cuda_runtime_api.cc:801:3: warning: NULL used in arithmetic [-Wpointer-arith]
+24.95    assert(gpuPtr != NULL);
+24.95    ^
+25.06 gpu-sim.cc: In member function 'void gmmu_t::update_memory_management_policy()':
+25.06 gpu-sim.cc:2814:54: warning: variable 'is_linear' set but not used [-Wunused-but-set-variable]
+25.06      bool is_random = false, is_random_reuse = false, is_linear = false, is_linear_reuse = false, is_mixed = false, is_mixed_reuse = false;
+25.06                                                       ^
+25.06 gpu-sim.cc: In member function 'bool gmmu_t::should_cause_page_migration(mem_addr_t, bool)':
+25.06 gpu-sim.cc:3027:52: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+25.06              if ( get_bb_access_counter(root, addr) < m_config.migrate_threshold ) {
+25.06                                                     ^
+25.07 gpu-sim.cc:3040:56: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+25.07                  if ( get_bb_access_counter(root, addr) < m_config.migrate_threshold ) {
+25.07                                                         ^
+25.10 gpu-sim.cc: In member function 'void gmmu_t::update_GHB(mem_addr_t, size_t)':
+25.10 gpu-sim.cc:3643:30: warning: converting to non-pointer type '__gnu_cxx::__alloc_traits<std::allocator<unsigned int> >::value_type {aka unsigned int}' from NULL [-Wconversion-null]
+25.10              GHB[evict_index] = NULL;
+25.10                               ^
+25.10 gpu-sim.cc:3656:31: warning: converting to non-pointer type '__gnu_cxx::__alloc_traits<std::allocator<unsigned int> >::value_type {aka unsigned int}' from NULL [-Wconversion-null]
+25.10              GHB[GHB_SIZE - i] = NULL;
+25.10                                ^
+25.12 shader.cc: In member function 'void ldst_unit::refresh_tlb(mem_addr_t)':
+25.12 shader.cc:1559:25: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+25.12          if ( tlb.size() == m_core_config->tlb_size ) {
+25.12                          ^
+25.15 gpu-sim.cc: In member function 'void gmmu_t::do_hardware_prefetch(std::map<unsigned int, std::__cxx11::list<mem_fetch*> >&)':
+25.15 gpu-sim.cc:3790:45: warning: NULL used in arithmetic [-Wpointer-arith]
+25.15                              if (ghb_addr != NULL){
+25.15                                              ^
+25.15 In file included from shader.cc:49:0:
+25.15 shader.cc: In member function 'void shader_core_ctx::register_cta_thread_exit(unsigned int, kernel_info_t*)':
+25.15 shader_trace.h:39:63: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+25.15  #define SHADER_DTRACE(x)  (DTRACE(x) && (Trace::sampling_core == get_sid()\
+25.15                                                                ^
+25.15 shader_trace.h:45:9: note: in expansion of macro 'SHADER_DTRACE'
+25.15      if (SHADER_DTRACE(x)) {\
+25.15          ^
+25.15 shader.cc:2345:6: note: in expansion of macro 'SHADER_DPRINTF'
+25.15       SHADER_DPRINTF(LIVENESS, "GPGPU-Sim uArch: Finished CTA #%d (%lld,%lld), %u CTAs running\n",
+25.15       ^
+25.15 shader_trace.h:39:63: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+25.15  #define SHADER_DTRACE(x)  (DTRACE(x) && (Trace::sampling_core == get_sid()\
+25.15                                                                ^
+25.15 shader_trace.h:45:9: note: in expansion of macro 'SHADER_DTRACE'
+25.15      if (SHADER_DTRACE(x)) {\
+25.15          ^
+25.15 shader.cc:2349:9: note: in expansion of macro 'SHADER_DPRINTF'
+25.15          SHADER_DPRINTF(LIVENESS, "GPGPU-Sim uArch: Empty (last released kernel %u \'%s\').\n",
+25.15          ^
+25.15 shader_trace.h:39:63: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+25.15  #define SHADER_DTRACE(x)  (DTRACE(x) && (Trace::sampling_core == get_sid()\
+25.15                                                                ^
+25.15 shader_trace.h:45:9: note: in expansion of macro 'SHADER_DTRACE'
+25.15      if (SHADER_DTRACE(x)) {\
+25.15          ^
+25.15 shader.cc:2365:15: note: in expansion of macro 'SHADER_DPRINTF'
+25.15                SHADER_DPRINTF(LIVENESS,
+25.15                ^
+25.67 In file included from /usr/include/c++/5/bits/stl_algobase.h:71:0,
+25.67                  from /usr/include/c++/5/bits/char_traits.h:39,
+25.67                  from /usr/include/c++/5/string:40,
+25.67                  from /usr/include/c++/5/bitset:47,
+25.67                  from ../abstract_hardware_model.h:153,
+25.67                  from gpu-sim.h:32,
+25.67                  from gpu-sim.cc:30:
+25.67 /usr/include/c++/5/bits/predefined_ops.h: In instantiation of 'bool __gnu_cxx::__ops::_Iter_pred<_Predicate>::operator()(_Iterator) [with _Iterator = __gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int> >; _Predicate = gmmu_t::update_GHB(mem_addr_t, size_t)::<lambda(int*)>]':
+25.67 /usr/include/c++/5/bits/stl_algo.h:866:20:   required from '_ForwardIterator std::__remove_if(_ForwardIterator, _ForwardIterator, _Predicate) [with _ForwardIterator = __gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int> >; _Predicate = __gnu_cxx::__ops::_Iter_pred<gmmu_t::update_GHB(mem_addr_t, size_t)::<lambda(int*)> >]'
+25.67 /usr/include/c++/5/bits/stl_algo.h:936:30:   required from '_FIter std::remove_if(_FIter, _FIter, _Predicate) [with _FIter = __gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int> >; _Predicate = gmmu_t::update_GHB(mem_addr_t, size_t)::<lambda(int*)>]'
+25.67 gpu-sim.cc:3652:89:   required from here
+25.67 /usr/include/c++/5/bits/predefined_ops.h:234:30: error: no match for call to '(gmmu_t::update_GHB(mem_addr_t, size_t)::<lambda(int*)>) (unsigned int&)'
+25.67   { return bool(_M_pred(*__it)); }
+25.67                               ^
+25.67 /usr/include/c++/5/bits/predefined_ops.h:234:30: note: candidate: bool (*)(int*) <conversion>
+25.67 /usr/include/c++/5/bits/predefined_ops.h:234:30: note:   conversion of argument 2 would be ill-formed:
+25.67 /usr/include/c++/5/bits/predefined_ops.h:234:30: error: invalid conversion from 'unsigned int' to 'int*' [-fpermissive]
+25.67 gpu-sim.cc:3652:64: note: candidate: gmmu_t::update_GHB(mem_addr_t, size_t)::<lambda(int*)> <near match>
+25.67          GHB.erase(remove_if(GHB.begin(), GHB.end(), [](int* ptr) { return ptr == NULL; }), GHB.end());
+25.67                                                                 ^
+25.67 gpu-sim.cc:3652:64: note:   conversion of argument 1 would be ill-formed:
+25.67 In file included from /usr/include/c++/5/bits/stl_algobase.h:71:0,
+25.67                  from /usr/include/c++/5/bits/char_traits.h:39,
+25.67                  from /usr/include/c++/5/string:40,
+25.67                  from /usr/include/c++/5/bitset:47,
+25.67                  from ../abstract_hardware_model.h:153,
+25.67                  from gpu-sim.h:32,
+25.67                  from gpu-sim.cc:30:
+25.67 /usr/include/c++/5/bits/predefined_ops.h:234:30: error: invalid conversion from 'unsigned int' to 'int*' [-fpermissive]
+25.67   { return bool(_M_pred(*__it)); }
+25.67                               ^
+25.81 cuda_runtime_api.cc: In function 'void extract_code_using_cuobjdump()':
+25.81 cuda_runtime_api.cc:1508:17: warning: ignoring return value of 'int system(const char*)', declared with attribute warn_unused_result [-Wunused-result]
+25.81   system(command);
+25.81                  ^
+25.81 cuda_runtime_api.cc: In function 'char* readfile(std::__cxx11::string)':
+25.81 cuda_runtime_api.cc:1614:26: warning: ignoring return value of 'size_t fread(void*, size_t, size_t, FILE*)', declared with attribute warn_unused_result [-Wunused-result]
+25.81   fread(ret,1,filesize,fp);
+25.81                           ^
+26.29 gpu-sim.cc: In member function 'bool gmmu_t::should_cause_page_migration(mem_addr_t, bool)':
+26.29 gpu-sim.cc:3082:1: warning: control reaches end of non-void function [-Wreturn-type]
+26.29  }
+26.29  ^
+26.36 Makefile:91: recipe for target '/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/gpu-sim.o' failed
+26.37 make[1]: *** [/root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpgpu-sim/gpu-sim.o] Error 1
+26.37 make[1]: *** Waiting for unfinished jobs....
+28.30 echo /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/cuda_runtime_api.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/cuobjdump_lexer.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/cuobjdump_parser.o
+28.30 /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/cuda_runtime_api.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/cuobjdump_lexer.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/cuobjdump_parser.o
+28.30 ar rcs /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/libcuda.a /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/cuda_runtime_api.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/cuobjdump_lexer.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/libcuda/cuobjdump_parser.o
+28.31 make[1]: Leaving directory '/root/uvmsmart/libcuda'
+29.23 g++ -m64 /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/Ucache.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/XML_Parse.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/arbiter.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/area.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/array.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/bank.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/basic_circuit.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/basic_components.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/cacti_interface.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/component.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/core.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/crossbar.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/decoder.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/htree2.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/interconnect.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/io.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/iocontrollers.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/logic.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/main.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/mat.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/memoryctrl.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/noc.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/nuca.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/parameter.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/processor.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/router.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/sharedcache.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/subarray.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/technology.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/uca.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/wire.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/xmlParser.o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/gpgpu_sim_wrapper.o -o /root/uvmsmart/build/gcc-5.4.0/cuda-8000/release/gpuwattch/mcpat -lm -Wno-unknown-pragmas  -O3 -fPIC -msse2 -mfpmath=sse -DNTHREADS=4 -Icacti -lz  -I/usr/lib/ -I/usr/lib64/ -pthread
+29.30 make[2]: Leaving directory '/root/uvmsmart/src/gpuwattch'
+29.30 make[1]: Leaving directory '/root/uvmsmart/src/gpuwattch'
+30.14 make[1]: Leaving directory '/root/uvmsmart/src/gpgpu-sim'
+30.14 Makefile:206: recipe for target 'gpgpu-sim_uarch' failed
+30.14 make: *** [gpgpu-sim_uarch] Error 2
+------
+Dockerfile:14
+--------------------
+  12 |     # RUN git clone https://github.com/DebashisGanguly/gpgpu-sim_UVMSmart.git /root/gpgpu-sim_UVMSmart
+  13 |     COPY gpgpu-sim_UVMSmart /root/uvmsmart
+  14 | >>> RUN /bin/bash -c "cd /root/uvmsmart && source setup_environment && make -j20 && cd benchmarks/ && ./setup_config.sh GeForceGTX1080Ti && make && find . -name 'run' | xargs chmod +x"
+  15 |     WORKDIR /root/uvmsmart/
+  16 |     ENTRYPOINT "./setup.sh"
+--------------------
+ERROR: failed to solve: process "/bin/sh -c /bin/bash -c \"cd /root/uvmsmart && source setup_environment && make -j20 && cd benchmarks/ && ./setup_config.sh GeForceGTX1080Ti && make && find . -name 'run' | xargs chmod +x\"" did not complete successfully: exit code: 2

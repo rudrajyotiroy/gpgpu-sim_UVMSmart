@@ -3627,18 +3627,19 @@ END FUNCTION
 */
 
 void gmmu_t::update_GHB(mem_addr_t addr, size_t evict_count) {
-    // Ensure evict_count is not larger than the GHB size
-    evict_count = evict_count > GHB_SIZE ? GHB_SIZE : evict_count;
-
     auto it = std::find(GHB.begin(), GHB.end(), addr);
 
     if (it != GHB.end()) {
         // Address is already in GHB, perform eviction and shift
         size_t addr_index = std::distance(GHB.begin(), it);
+        cout << "GHB HIT, addr_index is " << addr_index << endl;
 
         // Evict the current address and the next (evict_count - 1) addresses
         for (size_t i = 0; i < evict_count; i++) {
-            size_t evict_index = (addr_index + i) % GHB_SIZE;
+            size_t evict_index = (addr_index + i);
+            if(evict_index >= GHB_SIZE){
+                break;
+            }
             GHB[evict_index] = NULL;
         }
 
@@ -3656,9 +3657,11 @@ void gmmu_t::update_GHB(mem_addr_t addr, size_t evict_count) {
     } else {
         // Normal addition to GHB
         if (count < GHB_SIZE) {
+            cout << "GHB MISS, adding to GHB at position " << count << endl;
             GHB[count] = addr;
             count++;
         } else {
+            cout << "GHB MISS, removing last element and adding to GHB" << endl;
             // GHB is full, so evict the oldest entry and shift others
             for (size_t i = 0; i < GHB_SIZE - 1; i++) {
                 GHB[i] = GHB[i + 1];
@@ -3773,6 +3776,7 @@ void gmmu_t::do_hardware_prefetch (std::map<mem_addr_t, std::list<mem_fetch*> > 
                         mem_addr_t faulted_page_addr = it->first;
 
                         // Update the GHB with the faulted address
+                        cout << "Fault address : 0x" << hex << faulted_page_addr << endl; 
                         update_GHB(faulted_page_addr, GHB_EVICT_COUNT);
 
                         std::list<mem_addr_t> cur_transfer_all_pages;

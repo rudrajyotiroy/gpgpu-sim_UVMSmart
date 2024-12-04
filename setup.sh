@@ -140,7 +140,7 @@ fi
 echo "setup_environment succeeded";
 
 export GPGPUSIM_SETUP_ENVIRONMENT_WAS_RUN=1
-cd /root/uvmsmart/benchmarks/Managed/2DCONV/
+cd /root/uvmsmart/benchmarks/Managed/
 echo "Entrypoint ended";
 
 /bin/bash "$@"

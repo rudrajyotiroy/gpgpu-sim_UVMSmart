@@ -38,6 +38,7 @@
 #include <fstream>
 #include <list>
 #include <stdio.h>
+#include <algorithm>
 
 #include <functional>
 
