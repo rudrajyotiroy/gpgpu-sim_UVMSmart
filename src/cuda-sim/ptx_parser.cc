@@ -116,7 +116,7 @@ symbol_table *init_parser( const char *ptx_filename )
        g_global_symbol_table = g_current_symbol_table = new symbol_table("global",0,g_global_allfiles_symbol_table);
    }
    ptx_lineno = 1;
-
+// Rudra : Wow
 #define DEF(X,Y) g_ptx_token_decode[X] = Y;
 #include "ptx_parser_decode.def"
 #undef DEF

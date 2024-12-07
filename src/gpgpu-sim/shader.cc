@@ -614,10 +614,10 @@ void shader_core_ctx::decode()
         m_inst_fetch_buffer.m_valid = false;
     }
 }
-
+// Rudra : Main fetch function
 void shader_core_ctx::fetch()
 {
-
+// Fetch here
     if( !m_inst_fetch_buffer.m_valid ) {
         if( m_L1I->access_ready() ) {
             mem_fetch *mf = m_L1I->next_access();

@@ -3627,9 +3627,9 @@ END FUNCTION
 */
 
 void gmmu_t::update_GHB(mem_addr_t addr, size_t evict_count) {
-    auto it = std::find(GHB.begin(), GHB.end(), addr);
+    auto it = std::find(GHB.begin(), (GHB.begin() + count), addr);
 
-    if (it != GHB.end()) {
+    if (it != (GHB.begin() + count)) {
         // Address is already in GHB, perform eviction and shift
         size_t addr_index = std::distance(GHB.begin(), it);
         cout << "GHB HIT, addr_index is " << addr_index << endl;
