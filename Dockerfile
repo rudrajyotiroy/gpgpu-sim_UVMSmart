@@ -9,6 +9,7 @@ RUN apt install -y build-essential xutils-dev bison zlib1g-dev flex libglu1-mesa
 RUN wget -O /tmp/cuda_8.0.61_375.26_linux-run https://developer.nvidia.com/compute/cuda/8.0/Prod2/local_installers/cuda_8.0.61_375.26_linux-run
 RUN chmod +x /tmp/cuda_8.0.61_375.26_linux-run
 RUN /tmp/cuda_8.0.61_375.26_linux-run -silent -toolkit
-RUN git clone https://github.com/DebashisGanguly/gpgpu-sim_UVMSmart.git /root/gpgpu-sim_UVMSmart
+COPY gpgpu-sim_UVMSmart /root/uvmsmart
+# RUN git clone https://github.com/DebashisGanguly/gpgpu-sim_UVMSmart.git /root/uvmsmart
 RUN /bin/bash -c "cd /root/uvmsmart && source setup_environment && make -j20 && cd benchmarks/ && ./setup_config.sh GeForceGTX1080Ti && make && find . -name 'run' | xargs chmod +x"
 

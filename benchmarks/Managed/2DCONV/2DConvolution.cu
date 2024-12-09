@@ -22,9 +22,8 @@
 #define GPU_DEVICE 0
 
 /* Problem size */
-#define NI 256
-#define NJ 256
-#define N_LOOP 100
+#define NI 1024
+#define NJ 1024
 
 /* Thread block dimensions */
 #define DIM_THREAD_BLOCK_X 32
@@ -35,93 +34,75 @@ typedef float DATA_TYPE;
 
 void init(DATA_TYPE* A)
 {
-        int i, j;
+	int i, j;
 
-        for (i = 0; i < NI; ++i)
-        {
-                for (j = 0; j < NJ; ++j)
-                {
-                        A[i*NJ + j] = (float)rand()/RAND_MAX;
-                }
-        }
-}
-
-void consume(DATA_TYPE* B)
-{
-        int i, j;
-        for (i = 0; i < NI; ++i)
-        {
-                for (j = 0; j < NJ; ++j)
-                {
-                        B[i*NJ + j] = B[i*NJ + j] + 1; // Just need to access the element
-                }
-        }
+	for (i = 0; i < NI; ++i)
+    	{
+		for (j = 0; j < NJ; ++j)
+		{
+			A[i*NJ + j] = (float)rand()/RAND_MAX;
+        	}
+    	}
 }
 
 __global__ void Convolution2D_kernel(DATA_TYPE *A, DATA_TYPE *B)
 {
-        int j = blockIdx.x * blockDim.x + threadIdx.x;
-        int i = blockIdx.y * blockDim.y + threadIdx.y;
+	int j = blockIdx.x * blockDim.x + threadIdx.x;
+	int i = blockIdx.y * blockDim.y + threadIdx.y;
 
-        DATA_TYPE c11, c12, c13, c21, c22, c23, c31, c32, c33;
+	DATA_TYPE c11, c12, c13, c21, c22, c23, c31, c32, c33;
 
-        c11 = +0.2;  c21 = +0.5;  c31 = -0.8;
-        c12 = -0.3;  c22 = +0.6;  c32 = -0.9;
-        c13 = +0.4;  c23 = +0.7;  c33 = +0.10;
+	c11 = +0.2;  c21 = +0.5;  c31 = -0.8;
+	c12 = -0.3;  c22 = +0.6;  c32 = -0.9;
+	c13 = +0.4;  c23 = +0.7;  c33 = +0.10;
 
-        if ((i < NI-1) && (j < NJ-1) && (i > 0) && (j > 0))
-        {
-                B[i * NJ + j] =  c11 * A[(i - 1) * NJ + (j - 1)]  + c21 * A[(i - 1) * NJ + (j + 0)] + c31 * A[(i - 1) * NJ + (j + 1)] 
-                        + c12 * A[(i + 0) * NJ + (j - 1)]  + c22 * A[(i + 0) * NJ + (j + 0)] +  c32 * A[(i + 0) * NJ + (j + 1)]
-                        + c13 * A[(i + 1) * NJ + (j - 1)]  + c23 * A[(i + 1) * NJ + (j + 0)] +  c33 * A[(i + 1) * NJ + (j + 1)];
-        }
+	if ((i < NI-1) && (j < NJ-1) && (i > 0) && (j > 0))
+	{
+		B[i * NJ + j] =  c11 * A[(i - 1) * NJ + (j - 1)]  + c21 * A[(i - 1) * NJ + (j + 0)] + c31 * A[(i - 1) * NJ + (j + 1)] 
+			+ c12 * A[(i + 0) * NJ + (j - 1)]  + c22 * A[(i + 0) * NJ + (j + 0)] +  c32 * A[(i + 0) * NJ + (j + 1)]
+			+ c13 * A[(i + 1) * NJ + (j - 1)]  + c23 * A[(i + 1) * NJ + (j + 0)] +  c33 * A[(i + 1) * NJ + (j + 1)];
+	}
 }
 
 
 void convolution2DCuda(DATA_TYPE* A, DATA_TYPE* B)
 {
-        dim3 block(DIM_THREAD_BLOCK_X, DIM_THREAD_BLOCK_Y);
-        dim3 grid((size_t)ceil( ((float)NI) / ((float)block.x) ), (size_t)ceil( ((float)NJ) / ((float)block.y)) );
+	dim3 block(DIM_THREAD_BLOCK_X, DIM_THREAD_BLOCK_Y);
+	dim3 grid((size_t)ceil( ((float)NI) / ((float)block.x) ), (size_t)ceil( ((float)NJ) / ((float)block.y)) );
+	
+	Convolution2D_kernel<<<grid, block>>>(A, B);
 
-        Convolution2D_kernel<<<grid, block>>>(A, B);
+	// Wait for GPU to finish before accessing on host
+	// mock synchronization of memory specific to stream
+	cudaDeviceSynchronize();
 }
 
 
 int main(int argc, char *argv[])
 {
-        DATA_TYPE* A1;
-        DATA_TYPE* A2;
-        DATA_TYPE* B1;
-        DATA_TYPE* B2;
-        int i;
+	DATA_TYPE* A;
+	DATA_TYPE* B;  
 
-        cudaMallocManaged( &A1, NI*NJ*sizeof(DATA_TYPE) );
-        cudaMallocManaged( &B1, NI*NJ*sizeof(DATA_TYPE) );
-        cudaMallocManaged( &A2, NI*NJ*sizeof(DATA_TYPE) );
-        cudaMallocManaged( &B2, NI*NJ*sizeof(DATA_TYPE) );
+	cudaMallocManaged( &A, NI*NJ*sizeof(DATA_TYPE) );
+	cudaMallocManaged( &B, NI*NJ*sizeof(DATA_TYPE) );
 
-        //initialize the arrays
-        init(A1);
-        for(i = 0; i< N_LOOP; i++){
-        //      std::cout << "**** Loop " << i << " first phase" << std::endl;
-                convolution2DCuda(A1, B1); // Phase 1: Convolute A1 and fetch A2
-                init(A2);
-                if(i){
-                        consume(B2);
-                }
-                cudaDeviceSynchronize();
-        //      std::cout << "**** Loop " << i << " second phase" << std::endl;
-                convolution2DCuda(A2, B2); // Phase 1: Convolute A2 and fetch A1
-                init(A1);
-                consume(B1);
-                cudaDeviceSynchronize();
-        }
-        consume(B2);
+	//initialize the arrays
+	init(A);
 
-        cudaFree(A1);
-        cudaFree(B1);
-        cudaFree(A2);
-        cudaFree(B2);
+	convolution2DCuda(A, B);
+	
+	FILE *fp;
 
-        return 0;
+	fp = fopen("result_2DConv.txt","a+");
+
+	for(int i = 0; i < NI*NJ; i+= 10000) {
+		fprintf(fp, "%lf\n", B[i]);
+	}
+	
+	fclose(fp);
+
+	cudaFree(A);
+	cudaFree(B);
+	
+	return 0;
 }
